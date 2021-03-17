@@ -1,0 +1,66 @@
+{
+  "type": "index_parallel",
+  "spec": {
+    "ioConfig": {
+      "type": "index_parallel",
+      "inputSource": {
+        "type": "http",
+        "uris": [
+          "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/01-03-2021.csv"
+        ]
+      },
+      "inputFormat": {
+        "type": "csv",
+        "findColumnsFromHeader": true
+      },
+      "appendToExisting": true
+    },
+    "tuningConfig": {
+      "type": "index_parallel",
+      "partitionsSpec": {
+        "type": "dynamic"
+      }
+    },
+    "dataSchema": {
+      "dataSource": "covid19_daily",
+      "granularitySpec": {
+        "type": "uniform",
+        "queryGranularity": "DAY",
+        "rollup": true
+      },
+      "timestampSpec": {
+        "column": "Last_Update",
+        "format": "auto"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "Combined_Key",
+          "Country_Region",
+          "Province_State"
+        ]
+      },
+      "metricsSpec": [
+        {
+          "name": "sum_Active",
+          "type": "longSum",
+          "fieldName": "Active"
+        },
+        {
+          "name": "sum_Confirmed",
+          "type": "longSum",
+          "fieldName": "Confirmed"
+        },
+        {
+          "name": "sum_Deaths",
+          "type": "longSum",
+          "fieldName": "Deaths"
+        },
+        {
+          "name": "sum_Recovered",
+          "type": "longSum",
+          "fieldName": "Recovered"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+.idea/
+.vscode/
+files/
+database/
+database/
+logs/*
+secrets/*
+tmp/*
+
+
+# python
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# airflow
+airflow.cfg
+airflow-webserver.pid
+airflow-worker.pid
+unittests.cfg
+webserver_config.py

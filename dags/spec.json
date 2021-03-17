@@ -1,0 +1,63 @@
+{
+  "type": "index_parallel",
+  "spec": {
+    "ioConfig": {
+      "type": "index_parallel",
+      "inputSource": {
+        "type": "http",
+        "uris": []
+      },
+      "inputFormat": {
+        "type": "csv",
+        "findColumnsFromHeader": true
+      },
+      "appendToExisting": false
+    },
+    "tuningConfig": {
+      "type": "index_parallel",
+      "partitionsSpec": {
+        "type": "dynamic"
+      }
+    },
+    "dataSchema": {
+      "dataSource": "covid19_daily",
+      "granularitySpec": {
+        "type": "uniform",
+        "queryGranularity": "DAY",
+        "rollup": true
+      },
+      "timestampSpec": {
+        "column": "Last_Update",
+        "format": "auto"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "Country_Region",
+          "Province_State"
+        ]
+      },
+      "metricsSpec": [
+        {
+          "name": "sum_Active",
+          "type": "longSum",
+          "fieldName": "Active"
+        },
+        {
+          "name": "sum_Confirmed",
+          "type": "longSum",
+          "fieldName": "Confirmed"
+        },
+        {
+          "name": "sum_Deaths",
+          "type": "longSum",
+          "fieldName": "Deaths"
+        },
+        {
+          "name": "sum_Recovered",
+          "type": "longSum",
+          "fieldName": "Recovered"
+        }
+      ]
+    }
+  }
+}
